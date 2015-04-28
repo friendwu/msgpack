@@ -5,7 +5,7 @@ import (
 	"io"
 	"reflect"
 
-	"gopkg.in/vmihailenco/msgpack.v2/codes"
+	"github.com/friendwu/msgpack/codes"
 )
 
 func (e *Encoder) encodeBytesLen(l int) error {

@@ -17,7 +17,7 @@ import (
 	"github.com/ugorji/go/codec"
 	. "gopkg.in/check.v1"
 
-	"gopkg.in/vmihailenco/msgpack.v2"
+	"github.com/friendwu/msgpack"
 )
 
 type nameStruct struct {

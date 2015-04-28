@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"gopkg.in/vmihailenco/msgpack.v2"
-	"gopkg.in/vmihailenco/msgpack.v2/codes"
+	"github.com/friendwu/msgpack"
+	"github.com/friendwu/msgpack/codes"
 )
 
 //------------------------------------------------------------------------------

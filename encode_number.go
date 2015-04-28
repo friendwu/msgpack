@@ -3,7 +3,7 @@ package msgpack
 import (
 	"math"
 
-	"gopkg.in/vmihailenco/msgpack.v2/codes"
+	"github.com/friendwu/msgpack/codes"
 )
 
 func (e *Encoder) EncodeUint(v uint) error {

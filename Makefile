@@ -1,4 +1,4 @@
 all:
-	go test gopkg.in/vmihailenco/msgpack.v2 -cpu=1
-	go test gopkg.in/vmihailenco/msgpack.v2 -cpu=2
-	go test gopkg.in/vmihailenco/msgpack.v2 -short -race
+	go test github.com/friendwu/msgpack -cpu=1
+	go test github.com/friendwu/msgpack -cpu=2
+	go test github.com/friendwu/msgpack -short -race

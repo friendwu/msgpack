@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sort"
 
-	"gopkg.in/vmihailenco/msgpack.v2"
+	"github.com/friendwu/msgpack"
 )
 
 func ExampleMarshal() {

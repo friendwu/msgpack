@@ -5,7 +5,7 @@ import (
 	"math"
 	"reflect"
 
-	"gopkg.in/vmihailenco/msgpack.v2/codes"
+	"github.com/friendwu/msgpack/codes"
 )
 
 func (d *Decoder) uint8() (uint8, error) {

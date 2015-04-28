@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"time"
 
-	"gopkg.in/vmihailenco/msgpack.v2/codes"
+	"github.com/friendwu/msgpack/codes"
 )
 
 type bufReader interface {

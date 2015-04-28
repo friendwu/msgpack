@@ -1,11 +1,14 @@
 package msgpack
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 
 	"gopkg.in/vmihailenco/msgpack.v2/codes"
 )
+
+var ErrArrMap = errors.New("array map")
 
 func (e *Encoder) encodeMapLen(l int) error {
 	switch {
@@ -84,6 +87,25 @@ func (d *Decoder) DecodeMapLen() (int, error) {
 	if c == codes.Nil {
 		return -1, nil
 	}
+
+	/*friendwu add*/
+	if c == codes.FixedArrayLow {
+		return 0, nil
+	}
+
+	if c > codes.FixedArrayLow && c <= codes.FixedArrayHigh {
+		return int(c & codes.FixedArrayMask), ErrArrMap
+	}
+	switch c {
+	case codes.Array16:
+		n, _ := d.uint16()
+		return int(n), ErrArrMap
+	case codes.Array32:
+		n, _ := d.uint32()
+		return int(n), ErrArrMap
+	}
+	/*friendwu add end*/
+
 	if c >= codes.FixedMapLow && c <= codes.FixedMapHigh {
 		return int(c & codes.FixedMapMask), nil
 	}
@@ -134,8 +156,10 @@ func (d *Decoder) DecodeMap() (interface{}, error) {
 }
 
 func (d *Decoder) mapValue(v reflect.Value) error {
+
 	n, err := d.DecodeMapLen()
-	if err != nil {
+
+	if err != nil && err != ErrArrMap {
 		return err
 	}
 	if n == -1 {
@@ -148,6 +172,33 @@ func (d *Decoder) mapValue(v reflect.Value) error {
 	}
 	keyType := typ.Key()
 	valueType := typ.Elem()
+
+	/*
+		friendwu add.
+		hack for lua-cmsgpack
+		if map binary is an array
+		we can convert it into an map[int]xx
+	*/
+	if err == ErrArrMap {
+		if keyType.Kind() != reflect.Int {
+			return errors.New("array map's must be map[int]xx" + keyType.Kind().String())
+		}
+
+		for i := 0; i < n; i++ {
+			//lua array index starts from 1.
+			mk := reflect.ValueOf(i + 1)
+			mv := reflect.New(valueType).Elem()
+
+			if err := d.DecodeValue(mv); err != nil {
+				return err
+			}
+
+			v.SetMapIndex(mk, mv)
+		}
+
+		return nil
+	}
+	/*friendwu add end*/
 
 	for i := 0; i < n; i++ {
 		mk := reflect.New(keyType).Elem()

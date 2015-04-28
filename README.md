@@ -1,6 +1,9 @@
 Msgpack implementation for Golang [![Build Status](https://travis-ci.org/vmihailenco/msgpack.svg)](https://travis-ci.org/vmihailenco/msgpack)
 ===
 
+friendwu notes:
+hack for lua-cmsgpack compatibility.
+
 Supports:
 - Primitives, arrays, maps, structs and interface{}.
 - time.Time.
@@ -9,14 +12,14 @@ Supports:
 - Struct field renaming, e.g. `msgpack:"my_field_name"`.
 - Omitempty flag, e.g. `msgpack:",omitempty"`.
 
-API docs: http://godoc.org/gopkg.in/vmihailenco/msgpack.v2
+API docs: http://godoc.org/github.com/friendwu/msgpack
 
 Installation
 ------------
 
 Install:
 
-    go get gopkg.in/vmihailenco/msgpack.v2
+    go get github.com/friendwu/msgpack
 
 Usage
 -----
